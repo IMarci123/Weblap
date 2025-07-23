@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kiadó Apartmanjaink</title>
+
+  <!-- FullCalendar JavaScript (local) -->
+  <script src="fullcalendar/fullcalendar-core.min.js"></script>
+  <script src="fullcalendar/fullcalendar-daygrid.min.js"></script>
+
+  <!-- iCal parser from CDN (optional, you can download this too) -->
+  <script src="https://cdn.jsdelivr.net/npm/ical.js/build/ical.min.js"></script>
+
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+    header {
+      background-color: #333;
+      color: #fff;
+      padding: 1rem;
+      text-align: center;
+    }
+    .social-links {
+      background-color: #444;
+      color: #fff;
+      text-align: center;
+      padding: 0.5rem 0;
+    }
+    .social-links a {
+      color: #fff;
+      margin: 0 10px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .social-links a:hover {
+      text-decoration: underline;
+    }
+    .container {
+      padding: 2rem;
+      max-width: 1000px;
+      margin: auto;
+    }
+    .apartment {
+      margin-bottom: 3rem;
+    }
+    .apartment img {
+      width: 48%;
+      margin-right: 2%;
+      margin-bottom: 1rem;
+      border-radius: 8px;
+    }
+    .attractions ul {
+      padding-left: 1.2rem;
+    }
+    .calendar {
+      margin-top: 2rem;
+    }
+    #calendar1, #calendar2 {
+      max-width: 900px;
+      margin: 20px auto;
+    }
+    @media (max-width: 600px) {
+      .apartment img {
+        width: 100%;
+        margin-right: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Üdvözöljük Apartmanjainkban</h1>
+    <p>Tökéletes szállás csodás látnivalók közelében</p>
+  </header>
+  <div class="social-links">
+    <a href="#">Facebook</a>
+    <a href="#">Instagram</a>
+    <a href="#">Kapcsolat</a>
+  </div>
+  <div class="container">
+    <section class="apartment">
+      <h2>Első Apartman</h2>
+      <img src="https://via.placeholder.com/400x250" alt="Első Apartman kép 1">
+      <img src="https://via.placeholder.com/400x250" alt="Első Apartman kép 2">
+      <p>Hangulatos, kényelmes apartman pároknak vagy egyéni utazóknak. Wi-Fi, konyha és erkély áll rendelkezésre.</p>
+    </section>
+
+    <section class="apartment">
+      <h2>Második Apartman</h2>
+      <img src="https://via.placeholder.com/400x250" alt="Második Apartman kép 1">
+      <img src="https://via.placeholder.com/400x250" alt="Második Apartman kép 2">
+      <p>Tágas és világos apartman családok számára ideális. Két hálószoba, nagy konyha és közeli parkoló tartozik hozzá.</p>
+    </section>
+
+    <section class="attractions">
+      <h2>Közeli Látnivalók</h2>
+      <ul>
+        <li>Túraútvonalak és természetjárás</li>
+        <li>Helyi éttermek és kávézók</li>
+        <li>Történelmi helyszínek és múzeumok</li>
+        <li>Strand vagy tóparti kikapcsolódás</li>
+        <li>Hétvégi piacok és helyi rendezvények</li>
+      </ul>
+    </section>
+
+    <section class="calendar">
+      <h2>Elérhetőségi Naptár – Első Apartman</h2>
+      <div id="calendar1">Naptár betöltése...</div>
+    </section>
+
+    <section class="calendar">
+      <h2>Elérhetőségi Naptár – Második Apartman</h2>
+      <div id="calendar2">Hamarosan elérhető...</div>
+    </section>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const calendarEl1 = document.getElementById('calendar1');
+      const calendar1 = new FullCalendar.Calendar(calendarEl1, {
+        plugins: [FullCalendar.dayGridPlugin],
+        initialView: 'dayGridMonth',
+        locale: 'hu',
+        height: 500,
+        events: async function (fetchInfo, successCallback, failureCallback) {
+          try {
+            const res = await fetch("https://ical.booking.com/v1/export?t=f7089cf0-bfcc-435e-ba71-607f0e7b042f");
+            const icsText = await res.text();
+            const jcalData = ICAL.parse(icsText);
+            const comp = new ICAL.Component(jcalData);
+            const vevents = comp.getAllSubcomponents("vevent");
+
+            const events = vevents.map(vevent => {
+              const event = new ICAL.Event(vevent);
+              return {
+                title: 'Foglalt',
+                start: event.startDate.toString(),
+                end: event.endDate.toString(),
+                color: '#d9534f'
+              };
+            });
+
+            successCallback(events);
+          } catch (err) {
+            console.error("Hiba a naptár betöltésekor:", err);
+            failureCallback(err);
+          }
+        }
+      });
+
+      calendar1.render();
+    });
+  </script>
+</body>
+</html>
