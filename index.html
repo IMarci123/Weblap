@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Kiadó Apartmanjaink</title>
 
-  <!-- FullCalendar JavaScript (local) -->
+  <!-- Local FullCalendar JS (NO CSS) -->
   <script src="fullcalendar/fullcalendar-core.min.js"></script>
   <script src="fullcalendar/fullcalendar-daygrid.min.js"></script>
 
-  <!-- iCal parser from CDN (optional, you can download this too) -->
+  <!-- iCal parser (from CDN or download if offline) -->
   <script src="https://cdn.jsdelivr.net/npm/ical.js/build/ical.min.js"></script>
 
   <style>
@@ -86,15 +86,15 @@
   <div class="container">
     <section class="apartment">
       <h2>Első Apartman</h2>
-      <img src="https://via.placeholder.com/400x250" alt="Első Apartman kép 1">
-      <img src="https://via.placeholder.com/400x250" alt="Első Apartman kép 2">
+      <img src="https://placehold.co/400x250" alt="Első Apartman kép 1">
+      <img src="https://placehold.co/400x250" alt="Első Apartman kép 2">
       <p>Hangulatos, kényelmes apartman pároknak vagy egyéni utazóknak. Wi-Fi, konyha és erkély áll rendelkezésre.</p>
     </section>
 
     <section class="apartment">
       <h2>Második Apartman</h2>
-      <img src="https://via.placeholder.com/400x250" alt="Második Apartman kép 1">
-      <img src="https://via.placeholder.com/400x250" alt="Második Apartman kép 2">
+      <img src="https://placehold.co/400x250" alt="Második Apartman kép 1">
+      <img src="https://placehold.co/400x250" alt="Második Apartman kép 2">
       <p>Tágas és világos apartman családok számára ideális. Két hálószoba, nagy konyha és közeli parkoló tartozik hozzá.</p>
     </section>
 
@@ -123,8 +123,9 @@
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       const calendarEl1 = document.getElementById('calendar1');
+
       const calendar1 = new FullCalendar.Calendar(calendarEl1, {
-        plugins: [FullCalendar.dayGridPlugin],
+        plugins: [ FullCalendar.dayGridPlugin ],
         initialView: 'dayGridMonth',
         locale: 'hu',
         height: 500,
