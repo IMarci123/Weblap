@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Kiadó Apartmanjaink</title>
 
-  <!-- Local FullCalendar JS (NO CSS) -->
+  <!-- FullCalendar JS (local, global build) -->
   <script src="fullcalendar/fullcalendar-core.min.js"></script>
   <script src="fullcalendar/fullcalendar-daygrid.min.js"></script>
 
-  <!-- iCal parser (from CDN or download if offline) -->
+  <!-- iCal parser (from CDN) -->
   <script src="https://cdn.jsdelivr.net/npm/ical.js/build/ical.min.js"></script>
 
   <style>
@@ -49,12 +49,6 @@
     .apartment {
       margin-bottom: 3rem;
     }
-    .apartment img {
-      width: 48%;
-      margin-right: 2%;
-      margin-bottom: 1rem;
-      border-radius: 8px;
-    }
     .attractions ul {
       padding-left: 1.2rem;
     }
@@ -65,12 +59,6 @@
       max-width: 900px;
       margin: 20px auto;
     }
-    @media (max-width: 600px) {
-      .apartment img {
-        width: 100%;
-        margin-right: 0;
-      }
-    }
   </style>
 </head>
 <body>
@@ -78,23 +66,21 @@
     <h1>Üdvözöljük Apartmanjainkban</h1>
     <p>Tökéletes szállás csodás látnivalók közelében</p>
   </header>
+
   <div class="social-links">
     <a href="#">Facebook</a>
     <a href="#">Instagram</a>
     <a href="#">Kapcsolat</a>
   </div>
+
   <div class="container">
     <section class="apartment">
       <h2>Első Apartman</h2>
-      <img src="https://placehold.co/400x250" alt="Első Apartman kép 1">
-      <img src="https://placehold.co/400x250" alt="Első Apartman kép 2">
       <p>Hangulatos, kényelmes apartman pároknak vagy egyéni utazóknak. Wi-Fi, konyha és erkély áll rendelkezésre.</p>
     </section>
 
     <section class="apartment">
       <h2>Második Apartman</h2>
-      <img src="https://placehold.co/400x250" alt="Második Apartman kép 1">
-      <img src="https://placehold.co/400x250" alt="Második Apartman kép 2">
       <p>Tágas és világos apartman családok számára ideális. Két hálószoba, nagy konyha és közeli parkoló tartozik hozzá.</p>
     </section>
 
@@ -125,7 +111,7 @@
       const calendarEl1 = document.getElementById('calendar1');
 
       const calendar1 = new FullCalendar.Calendar(calendarEl1, {
-        plugins: [ FullCalendar.dayGridPlugin ],
+        plugins: [dayGridPlugin], // ✅ global plugin name (no FullCalendar. prefix)
         initialView: 'dayGridMonth',
         locale: 'hu',
         height: 500,
